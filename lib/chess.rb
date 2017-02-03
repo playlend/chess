@@ -1,6 +1,43 @@
 class Game
-	attr_accessor :location, :figure
+	attr_accessor :location, :figure, :grid
 
+	def initialize
+		@grid = Board.new()
+
+	end
+
+	def prompt_figure
+		@figure = []
+		print "Please, enter the row of the figure: "
+		@figure[0] = gets.chomp.to_i
+		print "Please, enter the column of the figure: "
+		@figure[1] = gets.chomp.to_i
+		@figure
+	end
+
+	def prompt_location
+		@location = []
+		print "Please, enter the row to move: "
+		@location[0] = gets.chomp.to_i
+		print "Please, enter the column to move: "
+		@location[1] = gets.chomp.to_i
+		@location
+	end
+
+	# checks if the figure is available to move
+	def check_figure(figure)
+
+
+	end
+
+	# check if the place if vacant, or if there is a figure to take
+	def check_location
+
+
+	end
+
+	
+	# CLASS BOARD
 	class Board
 		attr_accessor :board, :firgures_white, :figures_black, :pawns_white, :pawns_black, :empty
 
@@ -66,46 +103,26 @@ class Game
 		end
 
 		def show_board
-			num = 8
 			num1 = 0
 			num2 = 7
-			letters = "	 a 		b 	   c 	  d 	 e 		f 	   g 	  h"
-			puts letters
+			columns = "      0      1       2      3      4      5      6      7"
+			puts columns
 
-			8.times do
+			8.times do |num|
 				puts
 				print "#{num}  "
 				p @board[num1..num2]
-				num -= 1
 				num1 += 8
 				num2 += 8
 			end
 			puts
-			puts letters
+			puts columns
 		end
 
 	end
-
-	def prompt_figure
-		@figure = []
-		print "Please, enter the row of the figure: "
-		@figure[0] = gets.chomp
-		print "Please, enter the column of the figure: "
-		@figure[1] = gets.chomp
-		@figure
-	end
-
-	def prompt_location
-		@location = []
-		print "Please, enter the row to move: "
-		@location[0] = gets.chomp
-		print "Please, ther the column to move: "
-		@location[1] = gets.chomp
-		@location
-	end
-
-
-
-
-
+	# CLASS BOARD
+	
 end
+
+game = Game.new()
+game.grid.show_board
