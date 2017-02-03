@@ -1,10 +1,12 @@
 class Game
-	attr_accessor :location, :figure, :grid, :figure_index, :location_index, :player1, :player2
+	attr_accessor :location, :figure, :grid, :figure_index, :location_index, :player1, :player2, :player1_taken, :player2_taken
 
 	def initialize
 		@grid = Board.new()
 		@player1 = 1
 		@player2 = 2
+		@player1_taken = []
+		@player2_taken = []
 	end
 
 	def prompt_figure
@@ -117,8 +119,41 @@ class Game
 		return condition
 	end
 
+	# game is over
+	def game_over
+		false
+	end	
 
-	
+
+	# game is started
+	def game_on
+		counter = 1
+		while !game_over
+			if counter == @player1
+				@grid.show_board
+				puts "Player № #{@player1}"
+				prompt_figure
+				prompt_location
+				get_figure_index
+				get_location_index
+				check_figure(@player1)
+
+				counter += 1
+			elsif counter == @player2
+				@grid.show_board
+				puts "Player № #{@player2}"
+				prompt_figure
+				prompt_location
+				get_figure_index
+				get_location_index
+				check_figure(@player2)
+
+				counter -= 1
+			end
+				
+		end
+	end
+
 	# CLASS BOARD
 	class Board
 		attr_accessor :board, :figures_white, :figures_black, :pawns_white, :pawns_black, :empty
@@ -200,10 +235,7 @@ class Game
 			puts
 			puts columns
 		end
-
 	end
 	# CLASS BOARD
 	
 end
-
-game = Game.new()
