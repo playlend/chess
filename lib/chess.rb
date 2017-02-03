@@ -1,9 +1,10 @@
 class Game
-	attr_accessor :location, :figure, :grid
+	attr_accessor :location, :figure, :grid, :figure_index, :location_index, :player1, :player2
 
 	def initialize
 		@grid = Board.new()
-
+		@player1 = 1
+		@player2 = 2
 	end
 
 	def prompt_figure
@@ -25,21 +26,102 @@ class Game
 	end
 
 	# checks if the figure is available to move
-	def check_figure(figure)
-
-
+	def get_figure_index
+		#get index of the figure
+		if (@figure[0] >= 0 && @figure[0] <= 7) &&
+			(@figure[1] >= 0 && @figure[1] <= 7)
+			case @figure[0]
+				when 0
+					@figure_index = @figure[1]
+				when 1
+					@figure_index = 8 + @figure[1]
+				when 2
+					@figure_index = 16 + @figure[1]
+				when 3
+					@figure_index = 24 + @figure[1]
+				when 4
+					@figure_index = 32 + @figure[1]
+				when 5
+					@figure_index = 40 + @figure[1]
+				when 6
+					@figure_index = 48 + @figure[1]
+				when 7
+					@figure_index = 56 + @figure[1]
+			end
+		else
+			return "Wrong figure"
+		end
+		return @figure_index
 	end
 
 	# check if the place if vacant, or if there is a figure to take
-	def check_location
-
-
+	def get_location_index
+		#get index of the figure
+		if (@location[0] >= 0 && @location[0] <= 7) &&
+			(@location[1] >= 0 && @location[1] <= 7)
+			case @location[0]
+				when 0
+					@location_index = @location[1]
+				when 1
+					@location_index = 8 + @location[1]
+				when 2
+					@location_index = 16 + @location[1]
+				when 3
+					@location_index = 24 + @location[1]
+				when 4
+					@location_index = 32 + @location[1]
+				when 5
+					@location_index = 40 + @location[1]
+				when 6
+					@location_index = 48 + @location[1]
+				when 7
+					@location_index = 56 + @location[1]
+			end
+		else
+			return "Wrong location"
+		end
+		return @location_index
 	end
+
+	# check if the selected figure is good to go, returns true or false
+	def check_figure(player)
+		condition = false
+		if player == @player1
+			#check if it's among white figures
+			@grid.figures_white.each do |element|
+				if @grid.board[@figure_index] == element
+					condition = true
+					return condition
+				end
+			end
+			@grid.pawns_white.each do |element|
+				if @grid.board[@figure_index] == element
+					condition = true
+					return condition
+				end
+			end
+		elsif player == @player2
+			@grid.figures_black.each do |element|
+				if @grid.board[@figure_index] == element
+					condition = true
+					return condition
+				end
+			end
+			@grid.pawns_black.each do |element|
+				if @grid.board[@figure_index] == element
+					condition = true
+					return condition
+				end
+			end
+		end
+		return condition
+	end
+
 
 	
 	# CLASS BOARD
 	class Board
-		attr_accessor :board, :firgures_white, :figures_black, :pawns_white, :pawns_black, :empty
+		attr_accessor :board, :figures_white, :figures_black, :pawns_white, :pawns_black, :empty
 
 		def initialize
 			@board = []
@@ -125,4 +207,3 @@ class Game
 end
 
 game = Game.new()
-game.grid.show_board
