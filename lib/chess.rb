@@ -1,13 +1,4 @@
 class Game
-<<<<<<< HEAD
-
-	class Board
-
-	end
-
-	class Cell
-
-=======
 	attr_accessor :answer
 
 	class Board
@@ -103,7 +94,7 @@ class Game
 		print "Please, ther the column: "
 		@answer[1] = gets.chomp
 		@answer
->>>>>>> board
+
 	end
 
 end
