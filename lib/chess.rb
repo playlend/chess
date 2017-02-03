@@ -1,5 +1,6 @@
 class Game
-	
+	attr_accessor :answer
+
 	class Board
 		attr_accessor :board, :firgures_white, :figures_black, :pawns_white, :pawns_black, :empty
 
@@ -83,7 +84,16 @@ class Game
 			puts letters
 		end
 
+	end
 
+
+	def prompt
+		@answer = []
+		print "Please, enter the row: "
+		@answer[0] = gets.chomp
+		print "Please, ther the column: "
+		@answer[1] = gets.chomp
+		@answer
 	end
 
 end
