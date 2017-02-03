@@ -1,5 +1,5 @@
 class Game
-	attr_accessor :answer
+	attr_accessor :location, :figure
 
 	class Board
 		attr_accessor :board, :firgures_white, :figures_black, :pawns_white, :pawns_black, :empty
@@ -86,15 +86,26 @@ class Game
 
 	end
 
-
-	def prompt
-		@answer = []
-		print "Please, enter the row: "
-		@answer[0] = gets.chomp
-		print "Please, ther the column: "
-		@answer[1] = gets.chomp
-		@answer
-
+	def prompt_figure
+		@figure = []
+		print "Please, enter the row of the figure: "
+		@figure[0] = gets.chomp
+		print "Please, enter the column of the figure: "
+		@figure[1] = gets.chomp
+		@figure
 	end
+
+	def prompt_location
+		@location = []
+		print "Please, enter the row to move: "
+		@location[0] = gets.chomp
+		print "Please, ther the column to move: "
+		@location[1] = gets.chomp
+		@location
+	end
+
+
+
+
 
 end
