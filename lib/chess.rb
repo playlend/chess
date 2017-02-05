@@ -87,42 +87,25 @@ class Game
 		return @location_index
 	end
 
-	# check if the selected figure is good to go, returns true or false
-	def check_figure(player)
-		condition = false
-		if player == @player1
-			#check if it's among white figures
-			@grid.figures_white.each do |element|
-				if @grid.board[@figure_index] == element
-					condition = true
-					return condition
-				end
-			end
-			@grid.pawns_white.each do |element|
-				if @grid.board[@figure_index] == element
-					condition = true
-					return condition
-				end
-			end
-		elsif player == @player2
-			@grid.figures_black.each do |element|
-				if @grid.board[@figure_index] == element
-					condition = true
-					return condition
-				end
-			end
-			@grid.pawns_black.each do |element|
-				if @grid.board[@figure_index] == element
-					condition = true
-					return condition
-				end
-			end
-		else
-			prompt_figure
-			get_figure_index
+	# defining the way pawn moves, if true we will call another method to perform move, if false we will ask for a different figure and location
+	def pawn_moves(color,figure_index,location_index)
+		#checking what color of the pawn
+		if color == @white
+			# 3 types of location
+			if (figure_index+8 == location_index) && (location_index == @grid.empty)
+				return true
+			elsif (figure_index+7 == location_index) || (figure_index+9 == location_index)
+				
+
+
+
+		elsif color == @black
+
 		end
-		return condition
-	end
+	end	
+
+
+
 
 	# CLASS BOARD
 	class Board
