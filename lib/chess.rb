@@ -87,25 +87,46 @@ class Game
 		return @location_index
 	end
 
+	# figure takes 
+	def figure_takes(player_takes, figure, location)
+		player_takes.push(@grid.board[location])
+		@grid.board[location] = @grid.board[figure]
+		@grid.board[figure] = @grid.empty
+	end
+	# figure moves 
+	def figure_moves(figure, location)
+		@grid.board[location] = @grid.board[figure]
+		@grid.board[figure] = @grid.empty
+	end
+
 	# defining the way pawn moves, if true we will call another method to perform move, if false we will ask for a different figure and location
+	# STILL HAVE TO MODIFY THE PART WHEN WE WANT TO TAKE OPPONT'S FIGURE
 	def pawn_moves(color,figure_index,location_index)
 		#checking what color of the pawn
 		if color == @white
 			if ((figure_index + 8) == location_index) && (@grid.board[location_index] == @grid.empty)
+				figure_moves(figure_index, location_index)
 				return true
 			elsif (figure_index+7) == location_index
 				if (figure_index != 0) && ((figure_index % 8) != 0)
-					return true
+					if @grid.board[location_index][0] == @black
+						figure_takes(@player1_taken, figure_index, location_index)
+						return true
+					end
 				end
 			elsif (figure_index+9) == location_index
 				if (figure_index != 7) && (figure_index != 15) && (figure_index != 23) && (figure_index != 31) && (figure_index != 47) && (figure_index != 55) 
-					return true
+					if @grid.board[location_index][0] == @black
+						figure_takes(@player1_taken, figure_index, location_index)
+						return true
+					end
 				end
 			elsif ((figure_index + 16) == location_index) && (@grid.board[location_index] == @grid.empty)
 				if (@grid.board[figure_index+8]) == @grid.empty
 					num = 8
 					8.times do 
 						if figure_index == num
+							figure_moves(figure_index, location_index)
 							return true
 						end	
 						num += 1 
@@ -115,20 +136,28 @@ class Game
 		elsif color == @black
 		# black pawn moves
 			if ((figure_index - 8) == location_index) && (@grid.board[location_index] == @grid.empty)
+				figure_moves(figure_index, location_index)
 				return true
 			elsif (figure_index-7) == location_index
 				if (figure_index != 63) && (figure_index != 55) && (figure_index != 47) && (figure_index != 39) && (figure_index != 31) && (figure_index != 23) && (figure_index != 15) && (figure_index != 7)
-					return true
+					if @grid.board[location_index][0] == @white
+						figure_takes(@player2_taken, figure_index, location_index)
+						return true
+					end
 				end
 			elsif (figure_index-9) == location_index
 				if (figure_index != 56) && ((figure_index % 8) != 0)
-					return true
+					if @grid.board[location_index][0] == @white
+						figure_takes(@player2_taken, figure_index, location_index)
+						return true
+					end
 				end
 			elsif ((figure_index - 16) == location_index) && (@grid.board[location_index] == @grid.empty)
 				if (@grid.board[figure_index - 8]) == @grid.empty
 					num = 48
 					8.times do
 						if figure_index == num
+							figure_moves(figure_index, location_index)
 							return true
 						end
 						num += 1
@@ -264,5 +293,3 @@ class Game
 	# CLASS BOARD
 	
 end
-game = Game.new
-game.game_on
