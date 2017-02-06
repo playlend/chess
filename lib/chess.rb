@@ -139,10 +139,43 @@ class Game
 		false
 	end	
 
-	def check 
-		pawn_moves(@black, 32, 32)
-	end	
+	
+	def game_over
+		false
+	end
 
+	def game_on
+		counter = 1
+		while !game_over
+			if counter == @player1
+				@grid.show_board
+				puts "Player 1"
+				prompt_figure
+				prompt_location
+				get_figure_index
+				get_location_index
+				if pawn_moves(@white, @figure_index, @location_index)
+					counter += 1
+				else
+					puts "Please, try one more time"
+					counter = 1
+				end
+			elsif counter == @player2
+				@grid.show_board
+				puts "Player 2"
+				prompt_figure
+				prompt_location
+				get_figure_index
+				get_location_index
+				if pawn_moves(@black, @figure_index, @location_index)
+					counter -= 1
+				else
+					puts "Please, try one more time"
+					counter = 2
+				end
+			end
+		end
+	end
 
 
 
@@ -231,6 +264,5 @@ class Game
 	# CLASS BOARD
 	
 end
-
 game = Game.new
-p game.check
+game.game_on
