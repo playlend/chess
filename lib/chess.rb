@@ -91,17 +91,56 @@ class Game
 	def pawn_moves(color,figure_index,location_index)
 		#checking what color of the pawn
 		if color == @white
-			# 3 types of location
-			if (figure_index+8 == location_index) && (location_index == @grid.empty)
+			if ((figure_index + 8) == location_index) && (@grid.board[location_index] == @grid.empty)
 				return true
-			elsif (figure_index+7 == location_index) || (figure_index+9 == location_index)
-				
-
-
-
+			elsif (figure_index+7) == location_index
+				if (figure_index != 0) && ((figure_index % 8) != 0)
+					return true
+				end
+			elsif (figure_index+9) == location_index
+				if (figure_index != 7) && (figure_index != 15) && (figure_index != 23) && (figure_index != 31) && (figure_index != 47) && (figure_index != 55) 
+					return true
+				end
+			elsif ((figure_index + 16) == location_index) && (@grid.board[location_index] == @grid.empty)
+				if (@grid.board[figure_index+8]) == @grid.empty
+					num = 8
+					8.times do 
+						if figure_index == num
+							return true
+						end	
+						num += 1 
+					end
+				end
+			end
 		elsif color == @black
-
+		# black pawn moves
+			if ((figure_index - 8) == location_index) && (@grid.board[location_index] == @grid.empty)
+				return true
+			elsif (figure_index-7) == location_index
+				if (figure_index != 63) && (figure_index != 55) && (figure_index != 47) && (figure_index != 39) && (figure_index != 31) && (figure_index != 23) && (figure_index != 15) && (figure_index != 7)
+					return true
+				end
+			elsif (figure_index-9) == location_index
+				if (figure_index != 56) && ((figure_index % 8) != 0)
+					return true
+				end
+			elsif ((figure_index - 16) == location_index) && (@grid.board[location_index] == @grid.empty)
+				if (@grid.board[figure_index - 8]) == @grid.empty
+					num = 48
+					8.times do
+						if figure_index == num
+							return true
+						end
+						num += 1
+					end
+				end
+			end
 		end
+		false
+	end	
+
+	def check 
+		pawn_moves(@black, 32, 32)
 	end	
 
 
@@ -192,3 +231,6 @@ class Game
 	# CLASS BOARD
 	
 end
+
+game = Game.new
+p game.check
