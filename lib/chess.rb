@@ -87,6 +87,15 @@ class Game
 		return @location_index
 	end
 
+	# show figures that are taken
+	def taken_figures(player)
+		if player == @player1
+			p @player1_taken
+		elsif player == @player2
+			p @player2_taken
+		end	
+	end
+
 	# figure takes 
 	def figure_takes(player_takes, figure, location)
 		player_takes.push(@grid.board[location])
@@ -99,8 +108,39 @@ class Game
 		@grid.board[figure] = @grid.empty
 	end
 
+	# define which figure to invoke appropriate method
+	def define_figure(color,figure_index,location_index)
+		# define color
+		if color == @white
+			case @grid.board[figure_index][1]
+				when "p"
+					if pawn_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end
+				else
+				puts "error"
+				return false
+			end
+		elsif color == @black
+			case @grid.board[figure_index][1]
+				when "p"
+					if pawn_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end
+				else
+				puts "error"
+				return false
+			end
+		end		
+		false			
+	end
+
+
 	# defining the way pawn moves, if true we will call another method to perform move, if false we will ask for a different figure and location
-	# STILL HAVE TO MODIFY THE PART WHEN WE WANT TO TAKE OPPONT'S FIGURE
 	def pawn_moves(color,figure_index,location_index)
 		#checking what color of the pawn
 		if color == @white
@@ -132,6 +172,8 @@ class Game
 						num += 1 
 					end
 				end
+			else
+				return false
 			end
 		elsif color == @black
 		# black pawn moves
@@ -163,6 +205,8 @@ class Game
 						num += 1
 					end
 				end
+			else
+				return false
 			end
 		end
 		false
@@ -178,12 +222,13 @@ class Game
 		while !game_over
 			if counter == @player1
 				@grid.show_board
-				puts "Player 1"
+				puts "Player 1 WHITE"
 				prompt_figure
 				prompt_location
 				get_figure_index
 				get_location_index
-				if pawn_moves(@white, @figure_index, @location_index)
+				if define_figure(@white, @figure_index, @location_index)
+					taken_figures(@player1)
 					counter += 1
 				else
 					puts "Please, try one more time"
@@ -191,12 +236,13 @@ class Game
 				end
 			elsif counter == @player2
 				@grid.show_board
-				puts "Player 2"
+				puts "Player 2 BLACK"
 				prompt_figure
 				prompt_location
 				get_figure_index
 				get_location_index
-				if pawn_moves(@black, @figure_index, @location_index)
+				if define_figure(@black, @figure_index, @location_index)
+					taken_figures(@player2)
 					counter -= 1
 				else
 					puts "Please, try one more time"
@@ -215,8 +261,8 @@ class Game
 		def initialize
 			@board = []
 			@empty = "xxx"
-			@figures_white = ["wr1","wk1","wb1","w Q","w K","wb2","wk2","wr2"]
-			@figures_black = ["br1","bk1","bb1","b Q","b K","bb2","bk2","br2"]
+			@figures_white = ["wr1","wk1","wb1","wQQ","wKK","wb2","wk2","wr2"]
+			@figures_black = ["br1","bk1","bb1","bQQ","bKK","bb2","bk2","br2"]
 			@pawns_white = ["wp1","wp2","wp3","wp4","wp5","wp6","wp7","wp8"]
 			@pawns_black = ["bp1","bp2","bp3","bp4","bp5","bp6","bp7","bp8"]
 			num1 = 0
