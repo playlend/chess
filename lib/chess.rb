@@ -210,9 +210,32 @@ class Game
 			end
 		end
 		false
-	end	
+	end
 
-	
+	#defining the way rook moves
+	def rook_moves(color,figure_index,location_index)	
+		if color == @white
+			# check if the location is reachable one side at a time
+			condition = false
+			forward = false
+			back = false
+			left = false
+			right = false
+			# determine which way user wants to go
+			if @figure[0] == @location[0]
+				# it's either right or left
+			elsif @figure[1] == @location[1]
+				# it's either forward or back
+			else
+				# it's a wrong location
+				condition = false		
+			end
+		elsif color == @black
+
+		end
+		condition	
+	end
+
 	def game_over
 		false
 	end
