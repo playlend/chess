@@ -119,6 +119,12 @@ class Game
 					else
 						return false
 					end
+				when "r"
+					if rook_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end
 				else
 				puts "error"
 				return false
@@ -131,6 +137,12 @@ class Game
 					else
 						return false
 					end
+				when "r"
+					if rook_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end	
 				else
 				puts "error"
 				return false
@@ -214,22 +226,76 @@ class Game
 
 	#defining the way rook moves
 	def rook_moves(color,figure_index,location_index)	
+		condition = false
+		forward = false
+		back = false
+		left = false
+		right = false
 		if color == @white
 			# check if the location is reachable one side at a time
-			condition = false
-			forward = false
-			back = false
-			left = false
-			right = false
 			# determine which way user wants to go
 			if @figure[0] == @location[0]
 				# it's either right or left
+				if @figure[1] == @location[1]
+					condition = false
+				# check for left and right
+				elsif @figure[1] > @location[1]
+					condition = false
+					left = true
+				elsif @figure[1] < @location[1]
+					condition = false
+					right = true
+				end
 			elsif @figure[1] == @location[1]
 				# it's either forward or back
+				if @figure[0] == @location[0]
+					condition = false
+				# check for forward	and back
+				elsif @figure[0] > @location[0]
+					condition = false
+					back = true
+				elsif @figure[0] < @location[0]
+					condition = false
+					forward = true				
+				end
 			else
 				# it's a wrong location
 				condition = false		
 			end
+
+			# if location is reachable we have to check if the way is clear
+			if forward == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+					# check if the way is clear
+					check = false
+					counter = @location[0] - @figure[0] - 1
+					num = 8
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check == true						
+						end	
+						num += 8 
+					end
+
+					# if the way is clear, perform the move or take opponets figure
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @black
+							figure_takes(@player1_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end
+			elsif back == true
+
+			elsif left == true
+
+			elsif right == true
+
+			end				
+			
 		elsif color == @black
 
 		end
@@ -362,3 +428,5 @@ class Game
 	# CLASS BOARD
 	
 end
+game = Game.new
+game.game_on
