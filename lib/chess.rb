@@ -289,10 +289,72 @@ class Game
 					end
 				end
 			elsif back == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+					check = false
+					counter = @figure[0] - @location[0] - 1
+					num = -8
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check == true
+						end
+						num -= 8
+					end
 
+					# if the way clear perform move
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @black
+							figure_takes(@player1_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end			
 			elsif left == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+					check = false
+					counter = figure_index - location_index - 1
+					num = -1
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check = true
+						end
+						num -= 1
+					end
 
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index, location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @black
+							figure_takes(@player1_taken, figure_index, location_index)
+							condition = true
+						end
+					end				
+				end
 			elsif right == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+					check = false
+					counter = location_index - figure_index - 1
+					num = 1
+					counter.times do 
+						if @grid.board[figure_index+num] != @grid.empty
+							check = true
+						end
+						num += 1
+					end
+
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @black
+							figure_takes(@player1_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end	
 
 			end				
 			
