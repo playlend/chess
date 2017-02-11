@@ -494,9 +494,14 @@ class Game
 	def knight_moves(color,figure_index,location_index)
 		condition = false
 		if color == @white
+
 		elsif color == @black
 		end
 		condition
+	end	
+
+	# will define another method which will complement knight_moves method
+	def complement_knight_moves(figure_index,location_index)
 	end	
 
 	def game_over
