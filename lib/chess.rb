@@ -359,6 +359,132 @@ class Game
 			end				
 			
 		elsif color == @black
+			# check if the location is reachable one side at a time
+			# determine which way user wants to go
+			if @figure[0] == @location[0]
+				# it's either right or left
+				if @figure[1] == @location[1]
+					condition = false
+				# check for left and right
+				elsif @figure[1] > @location[1]
+					condition = false
+					right = true
+				elsif @figure[1] < @location[1]
+					condition = false
+					left = true
+				end
+			elsif @figure[1] == @location[1]
+				# it's either forward or back
+				if @figure[0] == @location[0]
+					condition = false
+				# check for forward	and back
+				elsif @figure[0] > @location[0]
+					condition = false
+					forward = true
+				elsif @figure[0] < @location[0]
+					condition = false
+					back = true				
+				end
+			else
+				# it's a wrong location
+				condition = false		
+			end
+
+			# if location is reachable we have to check if the way is clear
+			if forward == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+					# check if the way is clear
+					check = false
+					counter = @figure[0] - @location[0] - 1
+					num = -8
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check == true						
+						end	
+						num -= 8 
+					end
+
+					# if the way is clear, perform the move or take opponets figure
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @white
+							figure_takes(@player2_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end
+			elsif back == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+					check = false
+					counter = @location[0] - @figure[0] - 1
+					num = 8
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check == true
+						end
+						num += 8
+					end
+
+					# if the way clear perform move
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @white
+							figure_takes(@player2_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end			
+			elsif left == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+					check = false
+					counter = figure_index - location_index - 1
+					num = -1
+					counter.times do
+						if @grid.board[figure_index+num] != @grid.empty
+							check = true
+						end
+						num -= 1
+					end
+
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index, location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @white
+							figure_takes(@player2_taken, figure_index, location_index)
+							condition = true
+						end
+					end				
+				end
+			elsif right == true
+				if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+					check = false
+					counter = location_index - figure_index - 1
+					num = 1
+					counter.times do 
+						if @grid.board[figure_index+num] != @grid.empty
+							check = true
+						end
+						num += 1
+					end
+
+					if check == false
+						if @grid.board[location_index] == @grid.empty
+							figure_moves(figure_index,location_index)
+							condition = true
+						elsif @grid.board[location_index][0] == @white
+							figure_takes(@player2_taken, figure_index, location_index)
+							condition = true
+						end
+					end
+				end	
+
+			end
+
 
 		end
 		condition	
