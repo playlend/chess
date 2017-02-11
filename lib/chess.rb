@@ -494,14 +494,29 @@ class Game
 	def knight_moves(color,figure_index,location_index)
 		condition = false
 		if color == @white
-
+			if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+			end	
 		elsif color == @black
+			if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+			end
 		end
 		condition
 	end	
 
 	# will define another method which will complement knight_moves method
+	# methods will return true or false based on ability to reach the location
 	def complement_knight_moves(figure_index,location_index)
+		# figuring out if the location is reachable
+		# we can go forward, back, left, right
+		# 1 [x+1][y+2]
+		# 2 [x+1][y-2]
+		# 3	[x+2][y+1] 
+		# 4	[x+2][y-1]
+		# 5	[x-1][y+2]
+		# 6	[x-1][y-2]
+		# 7	[x-2][y+1]
+		# 8	[x-2][y-1]
+
 	end	
 
 	def game_over
