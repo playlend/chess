@@ -125,6 +125,12 @@ class Game
 					else
 						return false
 					end
+				when "k"
+					if knight_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end	
 				else
 				puts "error"
 				return false
@@ -143,6 +149,12 @@ class Game
 					else
 						return false
 					end	
+				when "k"
+					if knight_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end			
 				else
 				puts "error"
 				return false
@@ -494,10 +506,32 @@ class Game
 	def knight_moves(color,figure_index,location_index)
 		condition = false
 		if color == @white
-			if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @black)
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_knight_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @black)
+				if complement_knight_moves(figure_index,location_index)
+					figure_takes(@player1_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
 			end	
 		elsif color == @black
-			if (@grid.board[location_index] == @grid.empty) || (@grid.board[location_index][0] == @white)
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_knight_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @white)
+				if complement_knight_moves(figure_index,location_index)
+					figure_takes(@player2_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
 			end
 		end
 		condition
@@ -516,7 +550,43 @@ class Game
 		# 6	[x-1][y-2]
 		# 7	[x-2][y+1]
 		# 8	[x-2][y-1]
-
+		condition = false
+		
+			if @location[0] == (@figure[0] + 1)
+				if @location[1] == (@figure[1] + 2)
+					condition = true
+					return condition
+				elsif @location[1] == (@figure[1] -2)
+					condition = true
+					return condition
+				end	
+			elsif @location[0] == (@figure[0] - 1)
+				if @location[1] == (@figure[1] + 2)
+					condition = true
+					return condition
+				elsif @location[1] == (@figure[1] -2)
+					condition = true
+					return condition
+				end
+			elsif @location[0] == (@figure[0] + 2)
+				if @location[1] == (@figure[1] + 1)
+					condition = true
+					return condition
+				elsif @location[1] == (@figure[1] - 1)
+					condition = true
+					return condition
+				end
+			elsif @location[0] == (@figure[0] - 2)
+				if @location[1] == (@figure[1] + 1)
+					condition = true
+					return condition
+				elsif @location[1] == (@figure[1] - 1)
+					condition = true
+					return condition
+				end
+			end						
+		
+		condition	
 	end	
 
 	def game_over
