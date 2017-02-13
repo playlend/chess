@@ -589,6 +589,11 @@ class Game
 		condition	
 	end	
 
+	# defining the way bishop moves
+	def bishop_moves
+
+	end
+
 	def game_over
 		false
 	end
