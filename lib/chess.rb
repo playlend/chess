@@ -590,8 +590,47 @@ class Game
 	end	
 
 	# defining the way bishop moves
-	def bishop_moves
+	# bishop moves diagonally
+	def bishop_moves(color,figure_index,location_index)
+		condition = false
+		if color == @white
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_bishop_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @black)
+				if complement_bishop_moves(figure_index,location_index)
+					figure_takes(@player1_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end	
+		elsif color == @black
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_bishop_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @white)
+				if complement_bishop_moves(figure_index,location_index)
+					figure_takes(@player2_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end
+		end
+		condition
+	end
 
+	# this method will return true if the location is reachable, and false if not
+	def complement_bishop_moves(figure_index,location_index)
+		# bishop can move four different directions
+		condition = false
+		
+		condition
 	end
 
 	def game_over
