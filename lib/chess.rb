@@ -762,7 +762,7 @@ class Game
 		condition
 	end
 
-	def queen_moves(figure_index,location_index)
+	def queen_moves(color,figure_index,location_index)
 		condition = false
 		if color == @white
 			if (@grid.board[location_index] == @grid.empty) 
@@ -797,7 +797,17 @@ class Game
 	end
 
 	def complement_queen_moves(figure_index,location_index)
-		
+		condition = false
+		if complement_bishop_moves(figure_index,location_index)
+			condition = true
+		elsif queen_hor_ver(figure_index,location_index)
+			condition = true
+		end
+		condition
+	end
+
+	# method that helps queen to move horizontally and vertically
+	def queen_hor_ver(figure_index,location_index)
 	end
 
 	def game_over
