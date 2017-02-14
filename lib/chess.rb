@@ -142,7 +142,13 @@ class Game
 						return true
 					else
 						return false
-					end				
+					end
+				when "K"
+					if king_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end			
 				else
 				puts "error"
 				return false
@@ -178,7 +184,13 @@ class Game
 						return true
 					else
 						return false
-					end					
+					end
+				when "K"
+					if king_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end						
 				else
 				puts "error"
 				return false
@@ -943,8 +955,55 @@ class Game
 
 	# additional method that helps king to move
 	def complement_king_moves(figure_index,location_index)
+		# king can move eight different directions, one step at a time
+		
 		condition = false
+		up = false
+		down = false
+		left = false
+		right = false
+		up_left = false
+		up_right = false
+		down_left = false
+		down_right = false
 
+		
+		# fitst, we need to find out which way user wants to go
+		if figure_index == location_index
+			condition = false
+			return condition
+		# up, down, left, right
+		elsif @figure[0] == @location[0]
+			if (@location[1] + 1) == @figure[1]
+				left = true
+				condition = true
+			elsif (@location[1] - 1) == @figure[1]
+				right = true
+				condition = true
+			end
+		elsif @figure[1] == @location[1]
+			if (@location[0] + 1) == @figure[0]
+				up = true
+				condition = true
+			elsif (@location[0] - 1) == @figure[0]
+				down = true
+				condition = true
+			end
+		# diagonal moves
+		elsif ((@figure[0] - @location[0])==1) && ((@figure[1] - @location[1])==1)
+			up_left = true
+			condition = true
+		elsif ((@figure[0] - @location[0])==1) && ((@location[1] - @figure[1])==1)
+			up_right = true
+			condition = true		
+		elsif ((@location[0] - @figure[0])==1) && ((@figure[1] - @location[1])==1)
+			down_left = true
+			condition = true
+		elsif ((@location[0] - @figure[0])==1) && ((@location[1] - @figure[1])==1)
+			down_right = true
+			condition = true									
+		end
+		
 		condition
 	end
 
@@ -986,8 +1045,6 @@ class Game
 			end
 		end
 	end
-
-
 
 	# CLASS BOARD
 	class Board
