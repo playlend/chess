@@ -652,16 +652,27 @@ class Game
 		if @figure == @location
 			condition = false
 			return condition
-		elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
-			top_left = true
-		elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
-			top_right = true
-		elsif (@location[0] - @figure[0]) == (@figure[1]-@location[1])
-			bottom_left = true
 		elsif (@figure[0] + @location[0]) == (@figure[1] + location[1])
+			top_left = true
+		elsif (@location[0] - @figure[0]) == (@figure[1]-@location[1])
+			top_right = true
+		elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
+			bottom_left = true
+		elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
 			bottom_right = true
-		end
+		end	
 
+		# checking if the way is clear
+		if top_left == true
+			
+		elsif top_right == true
+			
+		elsif bottom_left == true
+			
+		elsif bottom_right == true
+			
+		end	
+		
 		condition
 	end
 
