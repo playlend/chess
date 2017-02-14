@@ -131,6 +131,12 @@ class Game
 					else
 						return false
 					end	
+				when "b"
+					if bishop_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end		
 				else
 				puts "error"
 				return false
@@ -154,7 +160,13 @@ class Game
 						return true
 					else
 						return false
-					end			
+					end
+				when "b"
+					if bishop_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end					
 				else
 				puts "error"
 				return false
@@ -628,8 +640,28 @@ class Game
 	# this method will return true if the location is reachable, and false if not
 	def complement_bishop_moves(figure_index,location_index)
 		# bishop can move four different directions
+		# first, we need to check if the location is reachable
+		# then, we have to check if the way is clear
 		condition = false
-		
+		top_left = false
+		top_right = false
+		bottom_left = false
+		bottom_right = false
+
+		# determinning which way user wants to move
+		if @figure == @location
+			condition = false
+			return condition
+		elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
+			top_left = true
+		elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
+			top_right = true
+		elsif (@location[0] - @figure[0]) == (@figure[1]-@location[1])
+			bottom_left = true
+		elsif (@figure[0] + @location[0]) == (@figure[1] + location[1])
+			bottom_right = true
+		end
+
 		condition
 	end
 
