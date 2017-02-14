@@ -649,30 +649,104 @@ class Game
 		bottom_right = false
 
 		# determinning which way user wants to move
-		if @figure == @location
-			condition = false
-			return condition
-		elsif (@figure[0] + @location[0]) == (@figure[1] + location[1])
-			top_left = true
-		elsif (@location[0] - @figure[0]) == (@figure[1]-@location[1])
-			top_right = true
-		elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
-			bottom_left = true
-		elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
-			bottom_right = true
-		end	
+		if @grid.board[figure_index][0] == @white
+			if @figure == @location
+				condition = false
+				return condition
+			elsif (@location[0] - @figure[0]) == (@figure[1] - @location[1])
+				bottom_left = true
+			elsif (@location[0] - @figure[0]) == (@location[1] - @figure[1])
+				bottom_right = true	
+			elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
+				top_left = true
+			elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
+				top_right = true
+			end
+		else
+			if @figure == @location
+				condition = false
+				return condition
+			elsif (@figure[0] - @location[0]) == (@figure[1] - @location[1])
+				top_left = true
+			elsif (@figure[0] - @location[0]) == (@location[1] - @figure[1])
+				top_right = true	
+			elsif (@location[0] - @figure[0]) == (@figure[1] - @location[1])
+				bottom_left = true
+			elsif (@location[0] - @figure[0]) == (@location[1] - @figure[1])
+				bottom_right = true	
+			end
+		end
 
 		# checking if the way is clear
-		if top_left == true
-			
-		elsif top_right == true
-			
-		elsif bottom_left == true
-			
-		elsif bottom_right == true
-			
-		end	
-		
+		if top_left
+			check = false
+			num = -9
+			counter = @figure[0] - @location[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num -= 9
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif top_right
+			check = false
+			num = -7
+			counter = @figure[0] - @location[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num -= 7
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif bottom_left
+			check = false
+			num = 7
+			counter = @location[0] - @figure[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num += 7
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif bottom_right
+			check = false
+			num = 9
+			counter = @location[0] - @figure[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num += 9
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		end			
 		condition
 	end
 
