@@ -136,7 +136,13 @@ class Game
 						return true
 					else
 						return false
-					end		
+					end
+				when "Q"
+					if queen_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end				
 				else
 				puts "error"
 				return false
@@ -163,6 +169,12 @@ class Game
 					end
 				when "b"
 					if bishop_moves(color,figure_index,location_index)
+						return true
+					else
+						return false
+					end
+				when "Q"
+					if queen_moves(color,figure_index,location_index)
 						return true
 					else
 						return false
@@ -748,6 +760,44 @@ class Game
 			end
 		end			
 		condition
+	end
+
+	def queen_moves(figure_index,location_index)
+		condition = false
+		if color == @white
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_queen_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @black)
+				if complement_queen_moves(figure_index,location_index)
+					figure_takes(@player1_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end	
+		elsif color == @black
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_queen_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @white)
+				if complement_queen_moves(figure_index,location_index)
+					figure_takes(@player2_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end
+		end
+		condition
+	end
+
+	def complement_queen_moves(figure_index,location_index)
+		
 	end
 
 	def game_over
