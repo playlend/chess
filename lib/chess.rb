@@ -906,6 +906,48 @@ class Game
 		condition
 	end
 
+	# defining the way king is moving
+	def king_moves(color,figure_index,location_index)
+		condition = false
+		if color == @white
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_king_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @black)
+				if complement_king_moves(figure_index,location_index)
+					figure_takes(@player1_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end	
+		elsif color == @black
+			if (@grid.board[location_index] == @grid.empty) 
+				if complement_king_moves(figure_index,location_index)
+					figure_moves(figure_index,location_index)
+					condition = true
+					return condition
+				end
+			elsif (@grid.board[location_index][0] == @white)
+				if complement_king_moves(figure_index,location_index)
+					figure_takes(@player2_taken, figure_index, location_index)
+					condition = true
+					return condition
+				end	
+			end
+		end
+		condition
+	end
+
+	# additional method that helps king to move
+	def complement_king_moves(figure_index,location_index)
+		condition = false
+
+		condition
+	end
+
 	def game_over
 		false
 	end
