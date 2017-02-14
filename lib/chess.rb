@@ -808,6 +808,102 @@ class Game
 
 	# method that helps queen to move horizontally and vertically
 	def queen_hor_ver(figure_index,location_index)
+		condition = false
+		up = false
+		down = false
+		left = false
+		right = false
+
+		if @figure == @location
+			condition = false
+			return condition
+		elsif @figure[0] == @location[0]
+			# it's either left or right
+			if @figure[1] < @location[1]
+				right = true
+			elsif @figure[1] > @location[1]
+				left = true
+			end
+		elsif @figure[1] == @location[1]
+			# it's either up or down
+			if @figure[0] < @location[0]
+				down = true
+			elsif @figure[0] > @location[0]
+				up = true
+			end	
+		end
+
+		# now, we have to check if our way is clear
+		if right
+			check = false
+			num = 1
+			counter = @location[1] - @figure[1] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num += 1
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif left
+			check = false
+			num = -1
+			counter = @figure[1] - @location[1] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num -= 1
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif down
+			check = false
+			num = 8
+			counter = @location[0] - @figure[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num += 8
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		elsif up
+			check = false
+			num = -8
+			counter = @figure[0] - @location[0] - 1
+			if counter > 0
+				counter.times do
+					if @grid.board[figure_index+num] != @grid.empty
+						check = true
+					end
+					num -= 8
+				end
+			end
+
+			if !check
+				condition = true
+				return condition
+			end
+		end					
+		condition
 	end
 
 	def game_over
